@@ -1,0 +1,9 @@
+{
+  "known_shows": [
+    "08:00 AM",
+    "07:15 PM"
+  ],
+  "pending_alert": false,
+  "new_shows": [],
+  "last_heartbeat": "2026-06-10T12:28:47.193654+00:00"
+}
