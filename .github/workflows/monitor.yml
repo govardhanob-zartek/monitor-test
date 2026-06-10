@@ -36,6 +36,20 @@ jobs:
         run: |
           test -n "$TELEGRAM_TOKEN"
           test -n "$TELEGRAM_CHAT_ID"
+          python - <<'PY'
+          import os
+          import requests
+
+          token = os.environ["TELEGRAM_TOKEN"]
+          response = requests.get(
+              f"https://api.telegram.org/bot{token}/getMe",
+              timeout=30,
+          )
+          data = response.json()
+          if not data.get("ok"):
+              raise SystemExit(f"Telegram token check failed: {data}")
+          print(f"Telegram bot OK: @{data['result'].get('username')}")
+          PY
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

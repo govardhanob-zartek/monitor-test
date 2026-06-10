@@ -67,8 +67,17 @@ def send(msg):
         },
         timeout=30
     )
-    response.raise_for_status()
-    data = response.json()
+    try:
+        data = response.json()
+    except ValueError:
+        data = {"description": response.text}
+
+    if response.status_code >= 400:
+        description = data.get("description", response.text)
+        raise Exception(
+            f"Telegram send failed with HTTP {response.status_code}: {description}"
+        )
+
     if not data.get("ok"):
         raise Exception(f"Telegram send failed: {data}")
 
