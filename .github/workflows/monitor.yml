@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: odyssey-monitor
   cancel-in-progress: true
@@ -29,7 +32,16 @@ jobs:
 
       - run: playwright install --with-deps chromium
 
-      - run: python monitor.py
+      - name: Verify Telegram secrets
+        run: |
+          test -n "$TELEGRAM_TOKEN"
+          test -n "$TELEGRAM_CHAT_ID"
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      - name: Run monitor
+        run: python monitor.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

@@ -11,8 +11,14 @@ from playwright.sync_api import sync_playwright
 URL = "https://in.bookmyshow.com/movies/coimbatore/the-odyssey/buytickets/ET00480917/20260717"
 VENUE = "Broadway Cinemas: Coimbatore"
 
-TOKEN = os.environ["TELEGRAM_TOKEN"]
-CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
+TOKEN = os.environ.get("TELEGRAM_TOKEN")
+CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+
+if not TOKEN or not CHAT_ID:
+    raise RuntimeError(
+        "Missing TELEGRAM_TOKEN or TELEGRAM_CHAT_ID. "
+        "Set them as environment variables or GitHub Actions secrets."
+    )
 
 STATE_FILE = "state.json"
 MAX_SCRAPE_ATTEMPTS = 3
