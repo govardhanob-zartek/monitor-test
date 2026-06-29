@@ -6,12 +6,8 @@
     "07:15 PM",
     "11:00 PM"
   ],
-  "pending_alert": true,
-  "new_shows": [
-    "11:45 AM",
-    "03:30 PM",
-    "11:00 PM"
-  ],
-  "last_heartbeat": "2026-06-29T17:32:29.649377+00:00",
+  "pending_alert": false,
+  "new_shows": [],
+  "last_heartbeat": "2026-06-29T19:23:38.033625+00:00",
   "last_scrape_error_alert": "2026-06-21T12:21:29.515789+00:00"
 }
